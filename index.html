@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi pequeña Boo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('assets/fondo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+    .intro h1 {
+      font-size: 2.2em;
+      margin-bottom: 1em;
+      color: #ff66a3;
+    }
+    .intro .heart {
+      font-size: 6em;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .intro button {
+      margin-top: 1em;
+      padding: 12px 24px;
+      font-size: 1em;
+      background: #ff66a3;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .intro button:hover {
+      background: #ff3380;
+    }
+    .main {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      min-height: 100vh;
+    }
+    .carousel img {
+      width: 90%;
+      max-width: 800px;
+      max-height: 500px;
+      border-radius: 15px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .frase {
+      font-size: 1.3em;
+      font-style: italic;
+      max-width: 90%;
+      margin: 10px auto;
+      color: #ffe0ec;
+      text-shadow: 1px 1px 2px #000;
+    }
+    #audio-control {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: #555;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="intro">
+    <div class="heart">❤️</div>
+    <h1>Mi pequeña Boo...</h1>
+    <button onclick="startExperience()">Bienvenida al pasado, mi pequeña Boo</button>
+  </div>
+
+  <div class="main">
+    <div class="carousel">
+      <img id="imagen" src="assets/1.jpg" alt="Foto 1" />
+    </div>
+    <div class="frase" id="frase">Te fuiste, pero aún vivo en los recuerdos que tú dejaste.</div>
+    <button id="audio-control" onclick="toggleAudio()">⏸ Pausar música</button>
+    <audio id="bg-audio" autoplay loop>
+      <source src="assets/cancion.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+
+  <script>
+    const frases = [
+      "Te fuiste, pero aún vivo en los recuerdos que tú dejaste.",
+      "No te odio, te extraño. Y eso duele más.",
+      "Me aprendí tus formas, tus gestos, tus silencios… y aun así te perdí.",
+      "No sé cómo se sigue sin ti, pero estoy tratando de entenderlo.",
+      "Fuiste, eres, y aunque no quieras… serás el amor de mi corta vida.",
+      "A veces cierro los ojos solo para verte otra vez."
+    ];
+    const imagenes = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"];
+    let i = 0;
+
+    const fraseElem = document.getElementById('frase');
+    const imagenElem = document.getElementById('imagen');
+    const audio = document.getElementById('bg-audio');
+    const audioBtn = document.getElementById('audio-control');
+
+    function startExperience() {
+      document.querySelector('.intro').style.display = 'none';
+      document.querySelector('.main').style.display = 'flex';
+    }
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+        audioBtn.textContent = "⏸ Pausar música";
+      } else {
+        audio.pause();
+        audioBtn.textContent = "▶️ Reproducir música";
+      }
+    }
+
+    setInterval(() => {
+      i = (i + 1) % frases.length;
+      fraseElem.textContent = frases[i];
+      imagenElem.src = "assets/" + imagenes[i];
+    }, 5000);
+  </script>
+</body>
+</html>
